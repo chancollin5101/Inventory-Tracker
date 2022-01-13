@@ -44,6 +44,7 @@ const Shipments = () => {
         <ShipmentCard 
             key={item.id}
             attributes={item.attributes}
+            id={item.id}
         />)
     })
 

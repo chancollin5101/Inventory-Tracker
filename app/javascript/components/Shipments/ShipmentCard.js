@@ -30,10 +30,38 @@ const ShipmentText = styled.div`
     padding-bottom: 5px;
     color: black;
 `
+
+const New = styled.div`
+    margin-top: 5px;
+    margin-left: 10%;
+    text-align: left;
+    padding-bottom: 5px;
+    color: blue;
+`
+
+const IPR = styled.div`
+    margin-top: 5px;
+    margin-left: 10%;
+    text-align: left;
+    padding-bottom: 5px;
+    color: red;
+`
+
+const Arrived = styled.div`
+    margin-top: 5px;
+    margin-left: 10%;
+    text-align: left;
+    padding-bottom: 5px;
+    color: green;
+`
+
 const ShipmentStatus = styled.div`
-    .placeholder {
-        font-weight: bold;
-    }
+    margin-top: 5px;
+    margin-left: 10%;
+    text-align: left;
+    padding-bottom: 5px;
+    color: black;    
+    font-weight: bold;
 `
 
 const LinkWrapper = styled.div`
@@ -68,10 +96,19 @@ const ShipmentCard = (props) => {
             <ShipmentImg>
                 <img src={props.attributes.image_url} alt="shipment_img"/>
             </ShipmentImg>
-            <ShipmentText>Status: {props.attributes.status}</ShipmentText>
-            <ShipmentText>Employee Name: {props.attributes.shipper_name}</ShipmentText>
-            <ShipmentText>Employee Contact: {props.attributes.shipper_phone}</ShipmentText>
-            <ShipmentText>Cost: ${props.attributes.cost}</ShipmentText>
+            <ShipmentStatus>Status: </ShipmentStatus>
+            {props.attributes.status === "New" &&
+                <New>{props.attributes.status}</New>
+            }
+            {props.attributes.status === "In Progress" &&
+                <IPR>{props.attributes.status}</IPR>
+            }
+            {props.attributes.status === "Arrived" &&
+                <Arrived>{props.attributes.status}</Arrived>
+            }           
+            <ShipmentStatus>Employee Name: </ShipmentStatus><ShipmentText>{props.attributes.shipper_name}</ShipmentText>
+            <ShipmentStatus>Employee Contact: </ShipmentStatus><ShipmentText>({props.attributes.shipper_phone.slice(0, 3)}) {props.attributes.shipper_phone.slice(3, 6)}-{props.attributes.shipper_phone.slice(6, 10)}</ShipmentText>
+            <ShipmentStatus>Cost: </ShipmentStatus><ShipmentText>${props.attributes.cost}</ShipmentText>
             <LinkWrapper>
                 <Link to={`/shipment/${props.id}`}>View Shipment Details</Link>
             </LinkWrapper>
