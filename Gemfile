@@ -28,8 +28,6 @@ gem "stimulus-rails"
 gem "jbuilder"
 
 gem 'fast_jsonapi'
-
-gem 'react_on_rails'
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
 
