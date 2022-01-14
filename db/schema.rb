@@ -10,35 +10,38 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_12_064533) do
+ActiveRecord::Schema.define(version: 2022_01_14_021200) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "shipment_infos", force: :cascade do |t|
-    t.string "item"
-    t.float "value"
+  create_table "inventories", force: :cascade do |t|
+    t.string "title"
+    t.string "description"
+    t.float "price"
+    t.integer "quantity"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "slug"
+  end
+
+  create_table "shipments", force: :cascade do |t|
+    t.integer "quantity"
+    t.string "status"
+    t.string "shipper_name"
+    t.string "shipper_phone"
     t.string "from_name"
     t.string "from_addr"
     t.string "from_phone"
     t.string "to_name"
     t.string "to_addr"
     t.string "to_phone"
-    t.bigint "shipment_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["shipment_id"], name: "index_shipment_infos_on_shipment_id"
-  end
-
-  create_table "shipments", force: :cascade do |t|
-    t.string "status"
-    t.string "image_url"
     t.float "cost"
-    t.string "shipper_name"
-    t.string "shipper_phone"
+    t.bigint "inventory_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["inventory_id"], name: "index_shipments_on_inventory_id"
   end
 
-  add_foreign_key "shipment_infos", "shipments"
+  add_foreign_key "shipments", "inventories"
 end

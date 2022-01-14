@@ -6,44 +6,49 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-shipment = Shipment.create([
+
+inventory = Inventory.create([
     {
-        status: "In Progress",
-        image_url: "https://cdn.arstechnica.net/wp-content/uploads/2021/09/iPhone-13-Pro-Max-back-800x438.jpeg",
-        cost: 30.99,
-        shipper_name: "Jack Daniels",
-        shipper_phone: "9056789898"
+        title: "iPhone 12 Pro Max 128GB",
+        description: "Apple announced iPhone 12 Pro Max on October 13, 2020. The phone which is powered by the new Apple A14 Bionic processor, comes with a 6.7 inche Super Retina XDR OLED capacitive touchscreen and 2778 x 1284 p resolution. It features an HDR display and True Tone, and Wide color (P3) gamut.",
+        price: 1200.00,
+        quantity: 20,
     },
     {
-        status: "Arrived",
-        image_url: "https://www.relyco.com/wp-content/uploads/2019/10/Syn_Tridura_1_ALT.jpg",
-        cost: 200.50,
-        shipper_name: "Ronald Lee",
-        shipper_phone: "4165557890"
+        title: "iPhone 13 Pro Max 128GB",
+        description: "The iPhone 13 Pro Max display has rounded corners that follow a beautiful curved design, and these corners are within a standard rectangle.",
+        price: 1500.00,
+        quantity: 100,
     }
 ])
 
-shiperment_details = ShipmentInfo.create([
+shipment = Shipment.create([
     {
-        item: "iPhone 13 Pro Max",
-        value: 1500,
+        quantity: 2,
+        status: "In Progress",
+        shipper_name: "Jack Daniels",
+        shipper_phone: "9056789898",
         from_name: "Jack Ma",
         from_addr: "3 Sunset Beach Road, Richmond Hill, Ontario, L4C5R2, Canada",
         from_phone: "9056783232",
         to_name: "Ronald Tong",
         to_addr: "10 Yonge Street, Toronto, Ontario, M4C5R2, Canada",
         to_phone: "6478990023",
-        shipment: shipment.first
+        cost: 30.99,
+        inventory: inventory.first
     },
     {
-        item: "Confidential Documents",
-        value: 0,
+        quantity: 1,
+        status: "Arrived",
+        shipper_name: "Ronald Lee",
+        shipper_phone: "4165557890",
         from_name: "Rick Johnson",
         from_addr: "14 Sunset Dr Willows, California(CA), 95988, United States of America",
         from_phone: "9056783232",
         to_name: "John Doe",
         to_addr: "10 Markham Road, Markham, Ontario, L4C5R2, Canada",
         to_phone: "6478990023",
-        shipment: shipment[1]
+        cost: 10.50,
+        inventory: inventory[1]
     }
 ])
