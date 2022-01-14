@@ -6,13 +6,13 @@ module Api
             def index
                 shipment = Shipment.all
 
-                render json: ShipmentSerializer.new(shipment, options).serialized_json
+                render json: ShipmentSerializer.new(shipment).serialized_json
             end
 
             def show
                 shipment = Shipment.find_by(id: params[:id])
 
-                render json: ShipmentSerializer.new(shipment, options).serialized_json
+                render json: ShipmentSerializer.new(shipment).serialized_json
             end
 
             def create
@@ -29,7 +29,7 @@ module Api
                 shipment = Shipment.find_by(id: params[:id])
 
                 if shipment.update(shipment_params)
-                    render json: ShipmentSerializer.new(shipment, options).serialized_json
+                    render json: ShipmentSerializer.new(shipment).serialized_json
                 else
                     render json: { errors: shipment.errors.messages }, status: 422
                 end
@@ -48,13 +48,9 @@ module Api
             private
 
             def shipment_params
-                params.require(:shipment).permit(:status, :image_url, :cost, :shipper_name, :shipper_phone)
+                params.require(:shipment).permit(:quantity, :status, :shipper_name, :shipper_phone, 
+                :from_name, :from_addr, :from_phone, :to_name, :to_addr, :to_phone, :cost, :inventory_id)
             end
-
-            def options
-                @options ||= { include: %i[ShipmentInfo] }
-            end
-
         end
     end
 end
