@@ -1,7 +1,7 @@
 import React, {useState, useEffect, Fragment } from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
-import ShipmentCard from './ShipmentCard'
+import InventoryCard from './InventoryCard'
 
 const Home = styled.div`
     text-align: center;
@@ -26,22 +26,22 @@ const Grid = styled.div`
     margin-left: 2vw;
 `
 
-const Shipments = () => {
-    const [shipments, setShipments] = useState([])
+const Inventory = () => {
+    const [inventory, setInventory] = useState([])
 
     useEffect(() => {
         // fetch all shipments from api and update state
-        axios.get('/api/v1/shipment.json')
+        axios.get('/api/v1/inventory.json')
         .then( res => {
-            setShipments(res.data.data)
+            setInventory(res.data.data)
         })
         .catch( res => console.log(res) )
-    }, [shipments.length])
+    }, [inventory.length])
 
 
-    const grid = shipments.map( item => {
+    const grid = inventory.map( item => {
         return (
-        <ShipmentCard 
+        <InventoryCard 
             key={item.id}
             attributes={item.attributes}
             id={item.id}
@@ -61,4 +61,4 @@ const Shipments = () => {
     )
 }
 
-export default Shipments
+export default Inventory
