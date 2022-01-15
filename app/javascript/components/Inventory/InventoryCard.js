@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import ModalForm from '../Modal/ModalForm'
 
 
 const Card = styled.div`
@@ -108,6 +109,9 @@ const DeleteButton = styled.div`
 `
 
 const InventoryCard = (props) => {
+    const [showUpdate, setShowUpdate] = useState(false)
+    const [showDelete, setShowDelete] = useState(false)
+
     return (
         <Card>
             <InventoryStatus>{ props.attributes.title }</InventoryStatus>
@@ -118,10 +122,46 @@ const InventoryCard = (props) => {
                 <Link to={`/inventory/${props.attributes.slug}`}>View Inventory</Link>
             </LinkWrapper>
             <UpdateButton>
-                <a>Update Product</a>
+                <a onClick={() => setShowUpdate(true)}>Update Product</a>
+                <ModalForm
+                    title="Update Product"
+                    onClose={() => setShowUpdate(false)} 
+                    show={showUpdate}
+                >
+                    <form>
+                        <div className="form-group">
+                            <label htmlFor="title">Product Title: </label>
+                            <input id="title" />
+                        </div> 
+                        
+                        <div className="form-group">
+                            <label htmlFor="description">Product Description: </label>
+                            <input type="text" id="description" />
+                        </div>
+
+                        <div className="form-group">
+                            <label htmlFor="price">Product Price: </label>
+                            <input id="price" placeholder="$" />
+                        </div>
+
+                        <div className="form-group">
+                            <label htmlFor="quantity">Inventory Quantity: </label>
+                            <input id="quantity" />
+                        </div>
+                    </form>
+                </ModalForm>
             </UpdateButton>
             <DeleteButton>
-                <a>Delete Product</a>
+                <a onClick={() => setShowDelete(true)}>Delete Product</a>
+                <ModalForm
+                    title="Delete Product"
+                    onClose={() => setShowDelete(false)} 
+                    show={showDelete}
+                >
+                    <div className="form-group">
+                        <label htmlFor="title">Are you sure you want to delete this product? </label>
+                    </div> 
+                </ModalForm>
             </DeleteButton>
         </Card>
     )

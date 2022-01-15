@@ -41,6 +41,7 @@ const Grid = styled.div`
 `
 
 const Inventory = () => {
+    const [currInventory, setCurrInventory] = useState([])
     const [inventory, setInventory] = useState([])
     const [show, setShow] = useState(false)
 
@@ -48,13 +49,34 @@ const Inventory = () => {
         // fetch all shipments from api and update state
         axios.get('/api/v1/inventory.json')
         .then( res => {
-            setInventory(res.data.data)
+            setCurrInventory(res.data.data)
         })
         .catch( res => console.log(res) )
-    }, [inventory.length])
+    }, [currInventory.length])
 
+    const handleChange = (e) => {
+        e.preventDefault()
 
-    const grid = inventory.map( item => {
+        setInventory(Object.assign({}, inventory, {[e.target.name]: e.target.value}))
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+
+        const csrfToken = document.querySelector('[name=csrf-token]').content
+        axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
+       
+        axios.post('/api/v1/inventory', {inventory})
+        .then(res => {
+            const addRes = [...currInventory, res.data]
+            setCurrInventory({...currInventory, addRes})
+            setInventory({title: '', description: '', price: 0, quantity: 0})
+            setShow(false)
+        })
+        .catch(res => {})
+    }
+
+    const grid = Array.from(currInventory).map( item => {
         return (
         <InventoryCard 
             key={item.id}
@@ -74,30 +96,30 @@ const Inventory = () => {
                 </AddButton>
 
                 <ModalForm
+                    onSubmit={handleSubmit}
+                    title="Create new Product"
                     onClose={() => setShow(false)} 
                     show={show}
                 >
-                    <form>
-                        <div className="form-group">
-                            <label htmlFor="title">Product Title: </label>
-                            <input className="form-control" id="title" />
-                        </div> 
+                    <div className="form-group">
+                        <label>Product Title: </label>
+                        <input onChange={handleChange} value={currInventory.title} name="title" />
+                    </div> 
                         
-                        <div className="form-group">
-                            <label htmlFor="description">Product Description: </label>
-                            <input className="form-control" id="description" />
-                        </div>
+                    <div className="form-group">
+                        <label>Product Description: </label>
+                        <input onChange={handleChange} value={currInventory.description} name="description" />
+                    </div>
 
-                        <div className="form-group">
-                            <label htmlFor="price">Product Price: </label>
-                            <input className="form-control" id="price" placeholder="$" />
-                        </div>
+                    <div className="form-group">
+                        <label>Product Price: </label>
+                        <input onChange={handleChange} type="number" value={currInventory.price} name="price" placeholder="$" />
+                   </div>
 
-                        <div className="form-group">
-                            <label htmlFor="quantity">Inventory Quantity: </label>
-                            <input className="form-control" id="quantity" />
-                        </div>
-                    </form>
+                    <div className="form-group">
+                        <label>Inventory Quantity: </label>
+                        <input onChange={handleChange} type="number" value={currInventory.quantity} name="quantity" />
+                    </div>
                 </ModalForm>
             </Header>
             <Grid>

@@ -33,7 +33,7 @@ const Header = styled.div`
         font-weight: bold;    }
 
     li a:hover {
-        color: grey;
+        color: lightgrey;
     }
 `
 const ProductCard = styled.div`

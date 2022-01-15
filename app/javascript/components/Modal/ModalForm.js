@@ -54,15 +54,17 @@ const ModalForm = (props) => {
     <Modal onClick={props.onClose}>
       <ModalContent onClick={e => e.stopPropagation()}>
         <ModalHeader>
-          <ModalTitle>Create new product for tracking</ModalTitle>
+          <ModalTitle>{props.title}</ModalTitle>
           <ModalClose onClick={props.onClose}>X</ModalClose>
         </ModalHeader>
         <ModalBody>
-          {props.children}
+          <form onSubmit={props.onSubmit}>
+            {props.children}
+            <ModalFooter>
+              <button type="submit">Submit</button>
+            </ModalFooter>
+          </form>
         </ModalBody>
-        <ModalFooter>
-          <button className="form-control" type="submit">Submit</button>
-        </ModalFooter>
       </ModalContent>
     </Modal>
   )
