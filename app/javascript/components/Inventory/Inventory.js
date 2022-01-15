@@ -59,7 +59,7 @@ const Inventory = () => {
 
         setInventory(Object.assign({}, inventory, {[e.target.name]: e.target.value}))
     }
-
+    // Create a new Inventory record
     const handleSubmit = (e) => {
         e.preventDefault()
 
@@ -76,12 +76,33 @@ const Inventory = () => {
         .catch(res => {})
     }
 
+    // Update an Inventory record
+    const handleUpdate = (e, data) => {
+        e.preventDefault()
+
+        const csrfToken = document.querySelector('[name=csrf-token]').content
+        axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
+        
+        const slug = e.target.querySelector('[name=slug]').value
+        axios.patch(`/api/v1/inventory/${slug}`, { inventory })
+        .then(res => {
+            debugger
+            var index = currInventory.findIndex(x => x.slug == slug);
+            currInventory[index] = res.data
+            setCurrInventory({ currInventory })
+            setInventory({title: '', description: '', price: 0, quantity: 0})
+            setShow(false)
+        })
+        .catch(res => {})
+    }
+
     const grid = Array.from(currInventory).map( item => {
         return (
-        <InventoryCard 
+        <InventoryCard
+            onChange={handleChange}
+            subUpdate={handleUpdate}
             key={item.id}
             attributes={item.attributes}
-            id={item.id}
         />)
     })
 

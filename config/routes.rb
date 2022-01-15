@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :shipment, only: [:index, :show, :create, :update, :destroy]
-      resources :inventory, only: [:index, :show, :create, :update, :destroy]
+      resources :inventory, param: :slug
     end
   end
 

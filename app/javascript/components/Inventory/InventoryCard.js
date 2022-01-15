@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
 import styled from 'styled-components'
 import ModalForm from '../Modal/ModalForm'
-
 
 const Card = styled.div`
     border: 1px solid #efefef;
@@ -108,6 +108,10 @@ const DeleteButton = styled.div`
     }
 `
 
+const SlugLabel = styled.input`
+    display: none;
+`
+
 const InventoryCard = (props) => {
     const [showUpdate, setShowUpdate] = useState(false)
     const [showDelete, setShowDelete] = useState(false)
@@ -124,31 +128,31 @@ const InventoryCard = (props) => {
             <UpdateButton>
                 <a onClick={() => setShowUpdate(true)}>Update Product</a>
                 <ModalForm
+                    onSubmit={props.subUpdate}
                     title="Update Product"
                     onClose={() => setShowUpdate(false)} 
                     show={showUpdate}
                 >
-                    <form>
-                        <div className="form-group">
-                            <label htmlFor="title">Product Title: </label>
-                            <input id="title" />
-                        </div> 
+                    <div className="form-group">
+                        <label>Product Title: </label>
+                        <input onChange={props.onChange.bind(this)} defaultValue={props.attributes.title} name="title" />
+                    </div> 
                         
-                        <div className="form-group">
-                            <label htmlFor="description">Product Description: </label>
-                            <input type="text" id="description" />
-                        </div>
+                    <div className="form-group">
+                        <label>Product Description: </label>
+                        <input onChange={props.onChange.bind(this)} defaultValue={props.attributes.description} name="description"/>
+                    </div>
 
-                        <div className="form-group">
-                            <label htmlFor="price">Product Price: </label>
-                            <input id="price" placeholder="$" />
-                        </div>
+                    <div className="form-group">
+                        <label>Product Price: </label>
+                        <input type="number" onChange={props.onChange.bind(this)} defaultValue={props.attributes.price} name="price"/>
+                    </div>
 
-                        <div className="form-group">
-                            <label htmlFor="quantity">Inventory Quantity: </label>
-                            <input id="quantity" />
-                        </div>
-                    </form>
+                    <div className="form-group">
+                        <label>Inventory Quantity: </label>
+                        <input type="number" onChange={props.onChange.bind(this)} defaultValue={props.attributes.quantity} name="quantity"/>
+                    </div>
+                    <SlugLabel readOnly name="slug" value={props.attributes.slug}></SlugLabel>
                 </ModalForm>
             </UpdateButton>
             <DeleteButton>
