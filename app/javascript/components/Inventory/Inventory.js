@@ -59,6 +59,12 @@ const Inventory = () => {
 
         setInventory(Object.assign({}, inventory, {[e.target.name]: e.target.value}))
     }
+
+    const setupInventoryForUpdate = (id) => {
+        const index = currInventory.findIndex(x => x.id == id)
+        setInventory(currInventory[index])
+    }
+
     // Create a new Inventory record
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -100,6 +106,7 @@ const Inventory = () => {
         return (
         <InventoryCard
             onChange={handleChange}
+            beforeUpdate={setupInventoryForUpdate}
             subUpdate={handleUpdate}
             key={item.id}
             attributes={item.attributes}
