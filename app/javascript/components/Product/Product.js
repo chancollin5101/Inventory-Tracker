@@ -1,23 +1,39 @@
 import React, { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom';
 import axios from 'axios'
 
-const Shipment = (props) => {
+import Header from './Header'
 
-    const [shipment, setShipment] = useState({})
+const Product = (props) => {
+
+    const [product, setProduct] = useState({})
     const [shipmentInfo, setShipmentInfo] = useState({})
+    const [hasLoaded, setLoaded] = useState(false)
+    
+    const { id } = useParams()
 
     useEffect(() => {
-        const id = props.match.params.id
-        const url = `api/v1/shipment/${id}`
+        //const slug = props.match.params.slug
+        const url = `/api/v1/inventory/${id}`
 
-        axios.get(shipment)
-        .then( res => setShipment(res.data) )
+        axios.get(url)
+        .then( res => {
+            setProduct(res.data)
+            setLoaded(true)
+        })
         .catch( res => console.log(res) )
     }, [])
 
     return (
         <div className="wrapper">
             <div className="column">
+            {
+                hasLoaded &&
+                <Header
+                    attributes={product.data.attributes}
+                    shipments={product.included}
+                />
+            }
                 <div className="header"></div>
                 <div className="reviews"></div> 
             </div>
@@ -47,4 +63,4 @@ const Shipment = (props) => {
         </Card>*/
     )
 }
-export default Shipment
+export default Product

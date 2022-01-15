@@ -94,7 +94,7 @@ const InventoryCard = (props) => {
             <InventoryStatus>Price: </InventoryStatus><InventoryText>${ props.attributes.price }</InventoryText>
             <InventoryStatus>Inventory Count: </InventoryStatus><InventoryText>{ props.attributes.quantity }</InventoryText>
             <LinkWrapper>
-                <Link to={`/inventory/${props.id}`}>View Inventory</Link>
+                <Link to={`/inventory/${props.attributes.slug}`}>View Inventory</Link>
             </LinkWrapper>
         </Card>
     )

@@ -2,6 +2,7 @@ import React, {useState, useEffect, Fragment } from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
 import InventoryCard from './InventoryCard'
+import ModalForm from '../Modal/ModalForm'
 
 const Home = styled.div`
     text-align: center;
@@ -28,6 +29,7 @@ const Grid = styled.div`
 
 const Inventory = () => {
     const [inventory, setInventory] = useState([])
+    const [show, setShow] = useState(false)
 
     useEffect(() => {
         // fetch all shipments from api and update state
@@ -53,6 +55,43 @@ const Inventory = () => {
             <Header>
                 <h1>Chan Logistics</h1>
                 <Subheader>Inventory Tracking System</Subheader>
+                <button 
+                    onClick={() => setShow(true) 
+                }>
+                    + Add
+                </button>
+                <ModalForm
+                    onClose={() => setShow(false)} 
+                    show={show}
+                >
+                    <form>
+                        <div className="form-group">
+                            <label htmlFor="title">Product Title: </label>
+                            <input className="form-control" id="title" />
+                        </div> 
+                        
+                        <div className="form-group">
+                            <label htmlFor="description">Product Description: </label>
+                            <input className="form-control" id="description" />
+                        </div>
+
+                        <div className="form-group">
+                            <label htmlFor="price">Product Price: </label>
+                            <input className="form-control" id="price" placeholder="$" />
+                        </div>
+
+                        <div className="form-group">
+                            <label htmlFor="quantity">Inventory Quantity: </label>
+                            <input className="form-control" id="quantity" />
+                        </div>
+
+                        <div className="form-group">
+                            <button className="form-control" type="submit">
+                                Submit
+                            </button>
+                        </div>
+                    </form>
+                </ModalForm>
             </Header>
             <Grid>
                 {grid}
