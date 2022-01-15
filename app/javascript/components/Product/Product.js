@@ -1,14 +1,93 @@
 import React, { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
 import axios from 'axios'
+import styled from 'styled-components'
 
-import Header from './Header'
+const Wrapper = styled.div`
+    font-family: 'Trebuchet MS', sans-serif;
+`
+const Header = styled.div`
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #71b406;
+    padding-bottom: 10px;
+    text-align: center;
+    h1 {
+        font-size: 40px;
+        color: white;
+    }
+
+    ul {
+        list-style-type: none;
+    }
+
+    li {
+        float: left;
+    }
+
+    li a {
+        text-decoration: none;
+        color: white;
+        font-weight: bold;    }
+
+    li a:hover {
+        color: grey;
+    }
+`
+const ProductCard = styled.div`
+    border: 1px solid black;
+    background: #fff;
+    width: 80%;
+    padding-left: 10px;
+    margin-left: 10%;
+    margin-top: 10%;
+`
+
+const InventoryText = styled.div`
+    margin-top: 5px;
+    text-align: left;
+    padding-bottom: 5px;
+    color: black;
+`
+
+const InventoryStatus = styled.div`
+    margin-top: 5px;
+    text-align: left;
+    padding-bottom: 5px;
+    color: black;    
+    font-weight: bold;
+`
+
+const New = styled.div`
+    margin-top: 5px;
+    text-align: left;
+    padding-bottom: 5px;
+    color: blue;
+`
+
+const IPR = styled.div`
+    margin-top: 5px;
+    text-align: left;
+    padding-bottom: 5px;
+    color: red;
+`
+
+const Arrived = styled.div`
+    margin-top: 5px;
+    text-align: left;
+    padding-bottom: 5px;
+    color: green;
+`
 
 const Product = (props) => {
 
     const [product, setProduct] = useState({})
     const [shipmentInfo, setShipmentInfo] = useState({})
     const [hasLoaded, setLoaded] = useState(false)
+
+    const backTxt = "<-- Back to Inventory"
     
     const { id } = useParams()
 
@@ -25,22 +104,23 @@ const Product = (props) => {
     }, [])
 
     return (
-        <div className="wrapper">
-            <div className="column">
+        <Wrapper>
+            <Header>
+                <h1>Product Info</h1>
+                <ul>
+                    <li><Link to="/">{backTxt}</Link></li>
+                </ul>
+            </Header>
             {
                 hasLoaded &&
-                <Header
-                    attributes={product.data.attributes}
-                    shipments={product.included}
-                />
+                <ProductCard>
+                    <InventoryStatus>{ product.data.attributes.title }</InventoryStatus>
+                    <InventoryText>{ product.data.attributes.description }</InventoryText>
+                    <InventoryStatus>Price: </InventoryStatus><InventoryText>${ product.data.attributes.price }</InventoryText>
+                    <InventoryStatus>Inventory Count: </InventoryStatus><InventoryText>{ product.data.attributes.quantity }</InventoryText>
+                </ProductCard>
             }
-                <div className="header"></div>
-                <div className="reviews"></div> 
-            </div>
-            <div className="column">
-                <div className="info-form">[Info form goes here]</div>
-            </div>
-        </div>
+        </Wrapper>
 
         // previous shipments components
         /*<Card>

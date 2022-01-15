@@ -7,7 +7,9 @@ import ModalForm from '../Modal/ModalForm'
 const Home = styled.div`
     text-align: center;
     margin-left: auto;
+    font-family: 'Trebuchet MS', sans-serif;
 `
+
 const Header = styled.div`
     padding: 100px 100px 10px 100px;
 
@@ -15,10 +17,21 @@ const Header = styled.div`
         font-size: 40px;
     }
 `
-const Subheader = styled.div`
-    font-weight: 300;
-    font-size: 200;
+
+const AddButton = styled.button`
+    background-color: #71b406;
+    color: white;
+    border: none;
+    font-weight: bold;
+    padding: 10px 15px;
+    border-radius: 10px;
+    transition: ease-in-out 0.1s;
+    &:hover{
+        border-color: #619a07;
+        background: #619a07;
+    }
 `
+
 const Grid = styled.div`
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -53,13 +66,13 @@ const Inventory = () => {
     return (
         <Home>
             <Header>
-                <h1>Chan Logistics</h1>
-                <Subheader>Inventory Tracking System</Subheader>
-                <button 
+                <h1>Inventory Tracker</h1>
+                <AddButton 
                     onClick={() => setShow(true) 
                 }>
-                    + Add
-                </button>
+                    + Add Product
+                </AddButton>
+
                 <ModalForm
                     onClose={() => setShow(false)} 
                     show={show}
@@ -83,12 +96,6 @@ const Inventory = () => {
                         <div className="form-group">
                             <label htmlFor="quantity">Inventory Quantity: </label>
                             <input className="form-control" id="quantity" />
-                        </div>
-
-                        <div className="form-group">
-                            <button className="form-control" type="submit">
-                                Submit
-                            </button>
                         </div>
                     </form>
                 </ModalForm>

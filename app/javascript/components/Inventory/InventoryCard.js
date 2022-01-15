@@ -13,43 +13,12 @@ const Card = styled.div`
         border: 1px solid black
     }
 `
-const ShipmentImg = styled.div`
-    padding: 5% 10% 0 10%;
-
-    img {
-        height: 100px;
-        width: 100%;
-        border: 1px solid #efefef;
-        object-fit: cover;
-    }
-`
 
 const InventoryText = styled.div`
     margin-top: 5px;
     text-align: left;
     padding-bottom: 5px;
     color: black;
-`
-
-const New = styled.div`
-    margin-top: 5px;
-    text-align: left;
-    padding-bottom: 5px;
-    color: blue;
-`
-
-const IPR = styled.div`
-    margin-top: 5px;
-    text-align: left;
-    padding-bottom: 5px;
-    color: red;
-`
-
-const Arrived = styled.div`
-    margin-top: 5px;
-    text-align: left;
-    padding-bottom: 5px;
-    color: green;
 `
 
 const InventoryStatus = styled.div`
@@ -80,8 +49,60 @@ const LinkWrapper = styled.div`
         width: 100%;
         transition: ease-in-out 0.1s;
         &:hover{
-        border-color: #619a07;
-        background: #619a07;
+            border-color: #619a07;
+            background: #619a07;
+        }
+    }
+`
+
+const UpdateButton = styled.div`
+    margin: 30px 0 20px 0;
+    height: 50px;
+    a {
+        color: #fff;
+        background-color: #267cff;
+        border-radius: 4px;
+        padding: 10px 50px;
+        cursor: pointer;
+        border-radius: 3px;
+        border: 1px solid #71b406;
+        text-align: center;
+        line-height: 20px;
+        min-height: 40px;
+        margin: 7px;
+        font-weight: 600;
+        text-decoration: none;
+        width: 100%;
+        transition: ease-in-out 0.1s;
+        &:hover{
+            border-color: #619a07;
+            background: #1d5ec2;
+        }
+    }
+`
+
+const DeleteButton = styled.div`
+    margin: 30px 0 20px 0;
+    height: 50px;
+    a {
+        color: #fff;
+        background-color: #ff2929;
+        border-radius: 4px;
+        padding: 10px 50px;
+        cursor: pointer;
+        border-radius: 3px;
+        border: 1px solid #71b406;
+        text-align: center;
+        line-height: 20px;
+        min-height: 40px;
+        margin: 7px;
+        font-weight: 600;
+        text-decoration: none;
+        width: 100%;
+        transition: ease-in-out 0.1s;
+        &:hover{
+            border-color: #619a07;
+            background: #c21d1d;
         }
     }
 `
@@ -96,6 +117,12 @@ const InventoryCard = (props) => {
             <LinkWrapper>
                 <Link to={`/inventory/${props.attributes.slug}`}>View Inventory</Link>
             </LinkWrapper>
+            <UpdateButton>
+                <a>Update Product</a>
+            </UpdateButton>
+            <DeleteButton>
+                <a>Delete Product</a>
+            </DeleteButton>
         </Card>
     )
 }

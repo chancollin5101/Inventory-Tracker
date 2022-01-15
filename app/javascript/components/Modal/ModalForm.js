@@ -35,6 +35,7 @@ const ModalBody = styled.div`
   border-bottom: 1px solid #eee;
   align-items: left;
   text-align: left;
+  display: block;
 `
 const ModalClose = styled.button`
   float: right;
@@ -60,6 +61,7 @@ const ModalForm = (props) => {
           {props.children}
         </ModalBody>
         <ModalFooter>
+          <button className="form-control" type="submit">Submit</button>
         </ModalFooter>
       </ModalContent>
     </Modal>
