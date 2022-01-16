@@ -58,15 +58,11 @@ $ bundle exec rails s
                                          POST   /api/v1/shipment(.:format)                                                                        api/v1/shipment#create
                          api_v1_shipment GET    /api/v1/shipment/:id(.:format)                                                                    api/v1/shipment#show
                                          PATCH  /api/v1/shipment/:id(.:format)                                                                    api/v1/shipment#update
-                                         PUT    /api/v1/shipment/:id(.:format)                                                                    api/v1/shipment#update
                                          DELETE /api/v1/shipment/:id(.:format)                                                                    api/v1/shipment#destroy
                   api_v1_inventory_index GET    /api/v1/inventory(.:format)                                                                       api/v1/inventory#index
                                          POST   /api/v1/inventory(.:format)                                                                       api/v1/inventory#create
-                    new_api_v1_inventory GET    /api/v1/inventory/new(.:format)                                                                   api/v1/inventory#new
-                   edit_api_v1_inventory GET    /api/v1/inventory/:slug/edit(.:format)                                                            api/v1/inventory#edit
                         api_v1_inventory GET    /api/v1/inventory/:slug(.:format)                                                                 api/v1/inventory#show
                                          PATCH  /api/v1/inventory/:slug(.:format)                                                                 api/v1/inventory#update
-                                         PUT    /api/v1/inventory/:slug(.:format)                                                                 api/v1/inventory#update
                                          DELETE /api/v1/inventory/:slug(.:format)                                                                 api/v1/inventory#destroy
 ```
 
