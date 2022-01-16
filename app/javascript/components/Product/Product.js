@@ -87,7 +87,7 @@ const Grid = styled.div`
 const Product = (props) => {
     const [product, setProduct] = useState({})
     const [shipmentInfo, setShipmentInfo] = useState({})
-    const [newShipment, setNewShipment] = useState({})
+    const [shipment, setShipment] = useState({})
     const [hasLoaded, setLoaded] = useState(false)
     const [show, setShow] = useState(false)
 
@@ -103,7 +103,6 @@ const Product = (props) => {
         .then( res => {
             setProduct(res.data)
             setShipmentInfo(res.data.included)
-            console.log(res.data.included)
             setLoaded(true)
         })
         .catch( res => console.log(res) )
@@ -125,22 +124,29 @@ const Product = (props) => {
     const handleChange = (e) => {
         e.preventDefault()
 
-        setNewShipment(Object.assign({}, newShipment, {[e.target.name]: e.target.value}))
+        setShipment(Object.assign({}, shipment, {[e.target.name]: e.target.value}))
     }
 
     // Create a new Inventory record
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        const inv_id = product.id 
+        const inventory_id = product.data.id 
         const csrfToken = document.querySelector('[name=csrf-token]').content
         axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
-       
-        axios.post('/api/v1/shipment', {...newShipment, inv_id})
+
+        axios.post('/api/v1/shipment', {shipment, inventory_id})
         .then(res => {
-            const addRes = [...shipmentInfo, res.data]
-            setShipmentInfo({...shipmentInfo, addRes})
-            setNewShipment(
+            debugger
+            // updating Inventory quantity on client side
+            const newCount = product.data.attributes.quantity-e.target.querySelector('[name=quantity]').value
+            product.data.attributes.quantity = newCount
+            setProduct(product)
+
+            const addRes = [...shipmentInfo, res.data.data]
+            setShipmentInfo(addRes)
+
+            setShipment(
                 {
                     quantity: 0, 
                     status: '', 
@@ -211,25 +217,31 @@ const Product = (props) => {
                                 <input onChange={handleChange} value={shipmentInfo.shipper_phone} name="shipper_phone" required/>
                             </div>
                             <div>
-                                <label>From </label>
+                                <label>To </label>
                             </div>
                             <div>
                                 <label>Name: </label>
                             </div>
                             <div>
-                                <input onChange={handleChange} value={shipmentInfo.from_name} name="from_name" required/>
+                                <input onChange={handleChange} value={shipmentInfo.to_name} name="to_name" required/>
                             </div>
                             <div>
                                 <label>Address: </label>
                             </div>
                             <div>
-                                <input onChange={handleChange} value={shipmentInfo.from_address} name="from_address" required/>
+                                <input onChange={handleChange} value={shipmentInfo.to_addr} name="to_addr" required/>
                             </div>
                             <div>
                                 <label>Phone Number: </label>
                             </div>
                             <div>
-                                <input onChange={handleChange} value={shipmentInfo.from_phone} name="from_phone" required/>
+                                <input onChange={handleChange} value={shipmentInfo.to_phone} name="to_phone" required/>
+                            </div>
+                            <div>
+                                <label>Shipment Cost: </label>
+                            </div>
+                            <div>
+                                <input onChange={handleChange} step=".01" type="number" value={shipmentInfo.cost} name="cost" required/>
                             </div>
                         </ModalForm>
                     </ProductCard>

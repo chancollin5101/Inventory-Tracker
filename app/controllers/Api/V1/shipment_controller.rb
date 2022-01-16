@@ -16,7 +16,7 @@ module Api
             end
 
             def create
-                shipment = Shipment.new(shipment_params)
+                shipment = inventory.shipment.new(shipment_create_params)
 
                 if shipment.save
                     render json: ShipmentSerializer.new(shipment).serialized_json
@@ -47,9 +47,13 @@ module Api
 
             private
 
-            def shipment_params
-                params.require(:shipment).permit(:quantity, :status, :shipper_name, :shipper_phone, 
-                :from_name, :from_addr, :from_phone, :to_name, :to_addr, :to_phone, :cost, :inventory_id)
+            def inventory
+                @inventory ||= Inventory.find(params[:inventory_id])
+            end
+
+            def shipment_create_params
+                params.require(:shipment).permit(:quantity, :shipper_name, :shipper_phone, 
+                :to_name, :to_addr, :to_phone, :cost, :inventory_id)
             end
         end
     end
