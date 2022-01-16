@@ -1,4 +1,7 @@
 source "https://rubygems.org"
+
+ruby "2.7.2"
+
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby "3.0.0"
@@ -11,6 +14,8 @@ gem "sprockets-rails"
 
 # Use postgresql as the database for Active Record
 gem "pg", "~> 1.1"
+
+gem "figaro"
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 5.0"

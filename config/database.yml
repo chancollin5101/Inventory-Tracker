@@ -25,7 +25,7 @@ development:
   <<: *default
   database: shopify_backend_challenge_summer2022_development
   username: shopifychallengeapp
-  password: 5101
+  password: <%= ENV['DB_PASSWORD'] %>
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
   # When left blank, postgres will use the default role. This is
@@ -60,7 +60,7 @@ test:
   <<: *default
   database: shopify_backend_challenge_summer2022_test
   username: shopifychallengeapp
-  password: 5101
+  password: <%= ENV['DB_PASSWORD'] %>
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
 # ever seen by anyone, they now have access to your database.
@@ -85,4 +85,4 @@ production:
   <<: *default
   database: shopify_backend_challenge_summer2022_production
   username: shopify_backend_challenge_summer2022
-  password: <%= ENV["SHOPIFY_BACKEND_CHALLENGE_SUMMER2022_DATABASE_PASSWORD"] %>
+  password: <%= ENV['DB_PASSWORD'] %>
