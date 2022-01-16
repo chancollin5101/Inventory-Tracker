@@ -24,18 +24,18 @@ default: &default
 
 development:
   <<: *default
-  database: shopify_backend_challenge_summer2022_development
+  database: inventory_tracker_development
   username: shopifychallengeapp
   password: 5101
 
 test:
   <<: *default
-  database: shopify_backend_challenge_summer2022_test
+  database: inventory_tracker_test
   username: shopifychallengeapp
   password: 5101
 
 production:
   <<: *default
-  database: shopify_backend_challenge_summer2022_production
-  username: shopify_backend_challenge_summer2022
+  database: inventory_tracker_production
+  username: inventory_tracker
   password: 5101
