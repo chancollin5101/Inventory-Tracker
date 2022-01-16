@@ -100,7 +100,7 @@ const ShipmentCard = (props) => {
             } 
             <ShipmentStatus>Quantity: </ShipmentStatus>
                 <ShipmentText>{ props.attributes.quantity }</ShipmentText>           
-            <ShipmentStatus>To: </ShipmentStatus>
+            <ShipmentStatus>Customer Details: </ShipmentStatus>
                 <ShipmentText>{ props.attributes.to_name }</ShipmentText>
                 <ShipmentText>{ props.attributes.to_addr }</ShipmentText>
                 <ShipmentText>({props.attributes.to_phone.slice(0, 3)}) {props.attributes.to_phone.slice(3, 6)}-{props.attributes.to_phone.slice(6, 10)}</ShipmentText>

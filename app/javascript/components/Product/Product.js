@@ -118,6 +118,7 @@ const Product = (props) => {
             key={item.id}
             attributes={item.attributes}
             id={item.id}
+            max_quantity={product.data.attributes.quantity}
         />)
     })
 
@@ -199,7 +200,7 @@ const Product = (props) => {
                                 <label>Shipment Quantity: </label>
                             </div>
                             <div>    
-                                <input onChange={handleChange} type="number" value={shipmentInfo.quantity} name="quantity" required />
+                                <input onChange={handleChange} type="number" max={product.data.attributes.quantity} value={shipmentInfo.quantity} name="quantity" required />
                             </div>
                             <div>
                                 <label>Assign to </label>
