@@ -15,14 +15,14 @@ This app uses:
   * Rails
   * Yarn
   * PostgreSQL (psql)
-  * More detailed instructions can be found here ![Initial setup for Ruby on Rails](https://guides.rubyonrails.org/getting_started.html)
+  * More detailed instructions can be found here (<a href="https://guides.rubyonrails.org/getting_started.html" target="_blank">Initial Setup for Ruby on Rails</a>)
 
 2. Configure psql
 
 Create a Postgres user for the Ruby on Rails app 
   * First, switch into the Postgres user:
   ```
-  $su - postgres
+  $ su - postgres
   ```
   * Then, access psql 
   ```
