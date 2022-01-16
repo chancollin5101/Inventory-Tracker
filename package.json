@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/chancollin5101/shopify-backend-challenge-summer2022/issues"
   },
-  "homepage": "https://github.com/chancollin5101/shopify-backend-challenge-summer2022#readme"
+  "homepage": "https://github.com/chancollin5101/shopify-backend-challenge-summer2022#readme",
+  "dependencies": {
+    "webpack": "^5.66.0"
+  }
 }
