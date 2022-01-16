@@ -54,7 +54,7 @@ $ bundle exec rails s
 ```
 ## Functionality 
 * Feature implemented:
- * Ability to create “shipments” and assign inventory to the shipment, and adjust inventory appropriately
+  * Ability to create “shipments” and assign inventory to the shipment, and adjust inventory appropriately
 
 ## Routes
 ```
