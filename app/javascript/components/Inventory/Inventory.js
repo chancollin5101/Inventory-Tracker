@@ -97,7 +97,23 @@ const Inventory = () => {
             currInventory[index] = res.data
             setCurrInventory({ currInventory })
             setInventory({title: '', description: '', price: 0, quantity: 0})
-            setShow(false)
+        })
+        .catch(res => {})
+    }
+
+    // Delete an Inventory record
+    const handleDelete = (e, slug) => {
+        e.preventDefault()
+
+        const csrfToken = document.querySelector('[name=csrf-token]').content
+        axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
+        
+        axios.delete(`/api/v1/inventory/${slug}`)
+        .then(res => {
+            debugger
+            var index = currInventory.findIndex(x => x.slug == slug);
+            currInventory.splice(index, 1)
+            setCurrInventory({ currInventory })
         })
         .catch(res => {})
     }
@@ -108,6 +124,7 @@ const Inventory = () => {
             onChange={handleChange}
             beforeUpdate={setupInventoryForUpdate}
             subUpdate={handleUpdate}
+            subDelete={handleDelete}
             key={item.id}
             attributes={item.attributes}
         />)
@@ -129,24 +146,29 @@ const Inventory = () => {
                     onClose={() => setShow(false)} 
                     show={show}
                 >
-                    <div className="form-group">
+                    <div>
                         <label>Product Title: </label>
-                        <input onChange={handleChange} value={currInventory.title} name="title" />
-                    </div> 
-                        
-                    <div className="form-group">
-                        <label>Product Description: </label>
-                        <input onChange={handleChange} value={currInventory.description} name="description" />
                     </div>
-
-                    <div className="form-group">
+                    <div>
+                        <input onChange={handleChange} value={currInventory.title} name="title" required />
+                    </div>
+                    <div>    
+                        <label>Product Description: </label>
+                    </div>
+                    <div>    
+                        <textarea rows="10" cols="20" onChange={handleChange} value={currInventory.description} name="description" required></textarea>
+                    </div>
+                    <div>
                         <label>Product Price: </label>
-                        <input onChange={handleChange} type="number" value={currInventory.price} name="price" placeholder="$" />
-                   </div>
-
-                    <div className="form-group">
+                    </div>
+                    <div>
+                        <input onChange={handleChange} step='0.01' type="number" value={currInventory.price} name="price" placeholder="$" required/>
+                    </div>
+                    <div>
                         <label>Inventory Quantity: </label>
-                        <input onChange={handleChange} type="number" value={currInventory.quantity} name="quantity" />
+                    </div>
+                    <div>
+                        <input onChange={handleChange} type="number" value={currInventory.quantity} name="quantity" required />
                     </div>
                 </ModalForm>
             </Header>

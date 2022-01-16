@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import axios from 'axios'
 import styled from 'styled-components'
 import ModalForm from '../Modal/ModalForm'
 
@@ -125,11 +124,15 @@ const InventoryCard = (props) => {
         prep()
     }
 
+    const confirmDelete = (e) => {
+        props.subDelete(e, props.attributes.slug)
+    }
+
     return (
         <Card>
             <InventoryStatus>{ props.attributes.title }</InventoryStatus>
             <InventoryText>{ props.attributes.description }</InventoryText>
-            <InventoryStatus>Price: </InventoryStatus><InventoryText>${ props.attributes.price }</InventoryText>
+            <InventoryStatus>Price: </InventoryStatus><InventoryText>${ (Math.round(props.attributes.price * 100) / 100).toFixed(2) }</InventoryText>
             <InventoryStatus>Inventory Count: </InventoryStatus><InventoryText>{ props.attributes.quantity }</InventoryText>
             <LinkWrapper>
                 <Link to={`/inventory/${props.attributes.slug}`}>View Inventory</Link>
@@ -142,24 +145,32 @@ const InventoryCard = (props) => {
                     onClose={() => setShowUpdate(false)} 
                     show={showUpdate}
                 >
-                    <div className="form-group">
+                    <div>
                         <label>Product Title: </label>
-                        <input name="title" onChange={props.onChange.bind(this)} defaultValue={props.attributes.title} name="title" />
+                    </div> 
+                    <div>
+                        <input name="title" readOnly defaultValue={props.attributes.title} name="title" />
                     </div> 
                         
-                    <div className="form-group">
+                    <div>
                         <label>Product Description: </label>
-                        <input name="description" onChange={props.onChange.bind(this)} defaultValue={props.attributes.description} name="description"/>
+                    </div>
+                    <div>
+                        <textarea rows="10" cols="20" name="description" onChange={props.onChange.bind(this)} defaultValue={props.attributes.description} name="description"></textarea>
                     </div>
 
-                    <div className="form-group">
+                    <div>
                         <label>Product Price: </label>
-                        <input name="price" type="number" onChange={props.onChange.bind(this)} defaultValue={props.attributes.price} name="price"/>
+                    </div>
+                    <div>
+                        <input name="price" step='0.01' type="number" onChange={props.onChange.bind(this)} defaultValue={props.attributes.price} name="price"/>
                     </div>
 
-                    <div className="form-group">
+                    <div>
                         <label>Inventory Quantity: </label>
-                        <input tname="quantity" ype="number" onChange={props.onChange.bind(this)} defaultValue={props.attributes.quantity} name="quantity"/>
+                    </div>
+                    <div>
+                        <input tname="quantity" type="number" onChange={props.onChange.bind(this)} defaultValue={props.attributes.quantity} name="quantity"/>
                     </div>
                     <SlugLabel readOnly name="slug" value={props.attributes.slug}></SlugLabel>
                 </ModalForm>
@@ -167,12 +178,13 @@ const InventoryCard = (props) => {
             <DeleteButton>
                 <a onClick={() => setShowDelete(true)}>Delete Product</a>
                 <ModalForm
+                    onSubmit={confirmDelete}
                     title="Delete Product"
                     onClose={() => setShowDelete(false)} 
                     show={showDelete}
                 >
                     <div className="form-group">
-                        <label htmlFor="title">Are you sure you want to delete this product? </label>
+                        <label htmlFor="title">Are you sure you want to delete this product? (If there are shipments related to this product, it will also be deleted)</label>
                     </div> 
                 </ModalForm>
             </DeleteButton>

@@ -23,6 +23,7 @@ const ModalHeader = styled.div`
 `
 
 const ModalFooter = styled.div`
+  text-align: center;
   padding: 10px;
 `
 
@@ -30,12 +31,15 @@ const ModalTitle = styled.div`
   margin: 0;
 `
 const ModalBody = styled.div`
-  padding: 10px;
+  padding: 40px;
   border-top: 1px solid #eee;
   border-bottom: 1px solid #eee;
   align-items: left;
   text-align: left;
-  display: block;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+
 `
 const ModalClose = styled.button`
   float: right;
@@ -43,6 +47,16 @@ const ModalClose = styled.button`
   background-color: white;
   color: grey;
   border: none;
+`
+
+const SubmitButton = styled.button`
+  margin-top: 20px;
+  background-color: #71b406;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
+  font-weight:bold;
 `
 
 const ModalForm = (props) => {
@@ -61,7 +75,7 @@ const ModalForm = (props) => {
           <form onSubmit={props.onSubmit}>
             {props.children}
             <ModalFooter>
-              <button type="submit">Submit</button>
+              <SubmitButton type="submit">Submit</SubmitButton>
             </ModalFooter>
           </form>
         </ModalBody>

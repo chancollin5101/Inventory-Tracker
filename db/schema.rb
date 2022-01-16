@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_14_021200) do
+ActiveRecord::Schema.define(version: 2022_01_16_004549) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,9 +30,6 @@ ActiveRecord::Schema.define(version: 2022_01_14_021200) do
     t.string "status"
     t.string "shipper_name"
     t.string "shipper_phone"
-    t.string "from_name"
-    t.string "from_addr"
-    t.string "from_phone"
     t.string "to_name"
     t.string "to_addr"
     t.string "to_phone"

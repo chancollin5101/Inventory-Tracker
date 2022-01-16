@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Fragment } from 'react'
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import axios from 'axios'
 import styled from 'styled-components'
+import ShipmentCard from './ShipmentCard'
+import ModalForm from '../Modal/ModalForm'
 
 const Wrapper = styled.div`
     font-family: 'Trebuchet MS', sans-serif;
@@ -60,32 +62,34 @@ const InventoryStatus = styled.div`
     font-weight: bold;
 `
 
-const New = styled.div`
-    margin-top: 5px;
-    text-align: left;
-    padding-bottom: 5px;
-    color: blue;
+const AddButton = styled.button`
+    background-color: #71b406;
+    color: white;
+    border: none;
+    font-weight: bold;
+    padding: 10px 15px;
+    border-radius: 10px;
+    transition: ease-in-out 0.1s;
+    &:hover{
+        border-color: #619a07;
+        background: #619a07;
+    }
 `
 
-const IPR = styled.div`
-    margin-top: 5px;
-    text-align: left;
-    padding-bottom: 5px;
-    color: red;
-`
-
-const Arrived = styled.div`
-    margin-top: 5px;
-    text-align: left;
-    padding-bottom: 5px;
-    color: green;
+const Grid = styled.div`
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    width: 100%;
+    margin-top: 30px;
+    margin-left: 2vw;
 `
 
 const Product = (props) => {
-
     const [product, setProduct] = useState({})
     const [shipmentInfo, setShipmentInfo] = useState({})
+    const [newShipment, setNewShipment] = useState({})
     const [hasLoaded, setLoaded] = useState(false)
+    const [show, setShow] = useState(false)
 
     const backTxt = "<-- Back to Inventory"
     
@@ -98,10 +102,59 @@ const Product = (props) => {
         axios.get(url)
         .then( res => {
             setProduct(res.data)
+            setShipmentInfo(res.data.included)
+            console.log(res.data.included)
             setLoaded(true)
         })
         .catch( res => console.log(res) )
     }, [])
+
+    const grid = Array.from(shipmentInfo).map( item => {
+        return (
+        <ShipmentCard
+            //onChange={handleChange}
+            //beforeUpdate={setupInventoryForUpdate}
+            //subUpdate={handleUpdate}
+            //subDelete={handleDelete}
+            key={item.id}
+            attributes={item.attributes}
+            id={item.id}
+        />)
+    })
+
+    const handleChange = (e) => {
+        e.preventDefault()
+
+        setNewShipment(Object.assign({}, newShipment, {[e.target.name]: e.target.value}))
+    }
+
+    // Create a new Inventory record
+    const handleSubmit = (e) => {
+        e.preventDefault()
+
+        const inv_id = product.id 
+        const csrfToken = document.querySelector('[name=csrf-token]').content
+        axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
+       
+        axios.post('/api/v1/shipment', {...newShipment, inv_id})
+        .then(res => {
+            const addRes = [...shipmentInfo, res.data]
+            setShipmentInfo({...shipmentInfo, addRes})
+            setNewShipment(
+                {
+                    quantity: 0, 
+                    status: '', 
+                    shipper_name: '',
+                    shipper_phone: '',
+                    to_name: '',
+                    to_addr: '',
+                    to_phone: '',
+                    cost: 0
+                })
+            setShow(false)
+        })
+        .catch(res => {})
+    }
 
     return (
         <Wrapper>
@@ -113,16 +166,85 @@ const Product = (props) => {
             </Header>
             {
                 hasLoaded &&
-                <ProductCard>
-                    <InventoryStatus>{ product.data.attributes.title }</InventoryStatus>
-                    <InventoryText>{ product.data.attributes.description }</InventoryText>
-                    <InventoryStatus>Price: </InventoryStatus><InventoryText>${ product.data.attributes.price }</InventoryText>
-                    <InventoryStatus>Inventory Count: </InventoryStatus><InventoryText>{ product.data.attributes.quantity }</InventoryText>
-                </ProductCard>
+                <Fragment>
+                    <ProductCard>
+                        <InventoryStatus>{ product.data.attributes.title }</InventoryStatus>
+                        <InventoryText>{ product.data.attributes.description }</InventoryText>
+                        <InventoryStatus>Price: </InventoryStatus><InventoryText>${ product.data.attributes.price }</InventoryText>
+                        <InventoryStatus>Inventory Count: </InventoryStatus><InventoryText>{ product.data.attributes.quantity }</InventoryText>
+                        <AddButton 
+                            onClick={() => setShow(true) 
+                        }>
+                            + Ship Product
+                        </AddButton>
+                        <ModalForm
+                            onSubmit={handleSubmit}
+                            title="Create new Shipment"
+                            onClose={() => setShow(false)} 
+                            show={show}
+                        >
+                            <div>
+                                <label>Status: </label>
+                            </div>
+                            <div>
+                                <input onChange={handleChange} value="New" name="status" required />
+                            </div>
+                            <div>    
+                                <label>Shipment Quantity: </label>
+                            </div>
+                            <div>    
+                                <input onChange={handleChange} type="number" value={shipmentInfo.quantity} name="quantity" required />
+                            </div>
+                            <div>
+                                <label>Assign to </label>
+                            </div>
+                            <div>
+                                <label>Name: </label>
+                            </div>
+                            <div>
+                                <input onChange={handleChange} value={shipmentInfo.shipper_name} name="shipper_name" required/>
+                            </div>
+                            <div>
+                                <label>Phone Number: </label>
+                            </div>
+                            <div>
+                                <input onChange={handleChange} value={shipmentInfo.shipper_phone} name="shipper_phone" required/>
+                            </div>
+                            <div>
+                                <label>From </label>
+                            </div>
+                            <div>
+                                <label>Name: </label>
+                            </div>
+                            <div>
+                                <input onChange={handleChange} value={shipmentInfo.from_name} name="from_name" required/>
+                            </div>
+                            <div>
+                                <label>Address: </label>
+                            </div>
+                            <div>
+                                <input onChange={handleChange} value={shipmentInfo.from_address} name="from_address" required/>
+                            </div>
+                            <div>
+                                <label>Phone Number: </label>
+                            </div>
+                            <div>
+                                <input onChange={handleChange} value={shipmentInfo.from_phone} name="from_phone" required/>
+                            </div>
+                        </ModalForm>
+                    </ProductCard>
+                    <Grid>
+                        {grid}
+                    </Grid>
+                </Fragment>
             }
         </Wrapper>
 
         // previous shipments components
+//<ShipmentText>{ shipmentInfo.attributes.from_name }</ShipmentText>
+//<ShipmentText>{ shipmentInfo.data.attributes.from_addr }</ShipmentText>
+                    //<ShipmentText>({shipmentInfo.data.attributes.from_phone.slice(0, 3)}) {shipmentInfo.data.attributes.from_phone.slice(3, 6)}-{shipmentInfo.data.attributes.from_phone.slice(6, 10)}</ShipmentText>
+
         /*<Card>
             <InventoryStatus>Status: </InventoryStatus>
             {props.attributes.status === "New" &&
