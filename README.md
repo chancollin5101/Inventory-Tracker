@@ -52,8 +52,11 @@ $ bundle exec rails db:prepare
 $ yarn install
 $ bundle exec rails s
 ```
+## Functionality 
+* Feature implemented:
+ * Ability to create “shipments” and assign inventory to the shipment, and adjust inventory appropriately
 
-* Routes
+## Routes
 ```
                                   Prefix Verb   URI Pattern                                                                                       Controller#Action
                                     root GET    /                                                                                                 pages#index
