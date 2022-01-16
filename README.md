@@ -2,6 +2,9 @@
 
 This is a simple inventory tracker CRUD app built with Ruby on Rails and reactjs using webpacker
 
+![demo1](demo-gif/inv-tracker-demo1.gif)
+![demo2](demo-gif/inv-tracker-demo2.gif)
+
 This app uses:
   * Ruby version: ```3.0```
   * Rails version: ```7.0.1```
