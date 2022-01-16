@@ -28,7 +28,7 @@ shipment = Shipment.create([
         status: "In Progress",
         shipper_name: "Jack Daniels",
         shipper_phone: "9056789898",
-        to_name: "Jack Doe"
+        to_name: "Jack Doe",
         to_addr: "10 Yonge Street, Toronto, Ontario, M4C5R2, Canada",
         to_phone: "6478990023",
         cost: 30.99,

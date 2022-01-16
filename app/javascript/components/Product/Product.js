@@ -200,7 +200,7 @@ const Product = (props) => {
                                 <label>Shipment Quantity: </label>
                             </div>
                             <div>    
-                                <input onChange={handleChange} type="number" max={product.data.attributes.quantity} value={shipmentInfo.quantity} name="quantity" required />
+                                <input onChange={handleChange} type="number" min="0" max={product.data.attributes.quantity} value={shipmentInfo.quantity} name="quantity" required />
                             </div>
                             <div>
                                 <label>Assign to </label>
@@ -242,7 +242,7 @@ const Product = (props) => {
                                 <label>Shipment Cost: </label>
                             </div>
                             <div>
-                                <input onChange={handleChange} step=".01" type="number" value={shipmentInfo.cost} name="cost" required/>
+                                <input onChange={handleChange} step=".01" type="number" min="0" value={shipmentInfo.cost} name="cost" required/>
                             </div>
                         </ModalForm>
                     </ProductCard>

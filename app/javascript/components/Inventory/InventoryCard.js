@@ -163,14 +163,14 @@ const InventoryCard = (props) => {
                         <label>Product Price: </label>
                     </div>
                     <div>
-                        <input name="price" step='0.01' type="number" onChange={props.onChange.bind(this)} defaultValue={props.attributes.price} name="price"/>
+                        <input name="price" step='0.01' min="0" type="number" onChange={props.onChange.bind(this)} defaultValue={props.attributes.price} name="price"/>
                     </div>
 
                     <div>
                         <label>Inventory Quantity: </label>
                     </div>
                     <div>
-                        <input tname="quantity" type="number" onChange={props.onChange.bind(this)} defaultValue={props.attributes.quantity} name="quantity"/>
+                        <input tname="quantity" type="number" min="0" onChange={props.onChange.bind(this)} defaultValue={props.attributes.quantity} name="quantity"/>
                     </div>
                     <SlugLabel readOnly name="slug" value={props.attributes.slug}></SlugLabel>
                 </ModalForm>

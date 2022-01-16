@@ -162,13 +162,13 @@ const Inventory = () => {
                         <label>Product Price: </label>
                     </div>
                     <div>
-                        <input onChange={handleChange} step='0.01' type="number" value={currInventory.price} name="price" placeholder="$" required/>
+                        <input onChange={handleChange} step='0.01' min="0" type="number" value={currInventory.price} name="price" placeholder="$" required/>
                     </div>
                     <div>
                         <label>Inventory Quantity: </label>
                     </div>
                     <div>
-                        <input onChange={handleChange} type="number" value={currInventory.quantity} name="quantity" required />
+                        <input onChange={handleChange} type="number" min="0" value={currInventory.quantity} name="quantity" required />
                     </div>
                 </ModalForm>
             </Header>
